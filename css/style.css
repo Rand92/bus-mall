@@ -39,7 +39,7 @@ ul {
  
 }
 li{ color: rgb(114, 21, 21);
-    padding: 10px;
+    /* padding: 10px; */
     /* padding-left: 100px; */
 }
 body{margin-left: 50px;
