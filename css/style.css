@@ -111,3 +111,6 @@ button:hover span {
   button:hover {
     background-color: rgb(165, 72, 72);
   }
+ main canvas {
+    margin-top: 20px;
+  }

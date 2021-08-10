@@ -41,14 +41,18 @@ for (let i = 0; i < imageArray.length; i++) {
   new bussMall(imageArray[i].split('.')[0], imageArray[i]);
 }
 console.log(bussMall.all);
-let leftRandom;
-let MiddleRandom;
-let RightRandom;
+let leftRandom = gitRandomImg(0, imageArray.length - 1);
+let MiddleRandom = gitRandomImg(0, imageArray.length - 1);
+let RightRandom = gitRandomImg(0, imageArray.length - 1);
 
 function randomImg() {
-  leftRandom = gitRandomImg(0, imageArray.length - 1);
-  MiddleRandom = gitRandomImg(0, imageArray.length - 1);
-  RightRandom = gitRandomImg(0, imageArray.length - 1);
+
+  do {
+    leftRandom = gitRandomImg(0, imageArray.length - 1);
+    MiddleRandom = gitRandomImg(0, imageArray.length - 1);
+    RightRandom = gitRandomImg(0, imageArray.length - 1);
+  
+  } while( leftRandom===RightRandom || RightRandom===MiddleRandom || MiddleRandom===leftRandom);
 
 
   MiddleImage.src = './' + bussMall.all[RightRandom].productPath;
@@ -61,6 +65,8 @@ function randomImg() {
 }
 
 randomImg();
+
+
 
 let ulel = document.getElementById('Result');
 
@@ -91,7 +97,8 @@ function changingImg(jump) {
   }}
   stopButton.addEventListener('click', ResultOnClick);
     function ResultOnClick() {
-      removelist()
+     
+      stopButton.remove()
       const ulResult = document.getElementById('Result');
 
       
@@ -104,6 +111,7 @@ function changingImg(jump) {
 
       }
       stopButton.removeEventListener('click', ResultOnClick);
+      chart();
     }
    
   function removelist() {
@@ -111,7 +119,70 @@ function changingImg(jump) {
   }
 
 
-
+function chart (){
+  let NameOfProduct =[];
+  let ProductShown=[];
+  let ProductClicks =[];
+  for (let i=0;i<bussMall.all.length;i++){
+    NameOfProduct.push(bussMall.all[i].prductName);
+    ProductShown.push(bussMall.all[i].NumOfShown);
+    ProductClicks.push(bussMall.all[i].NumOfClicks);
+  }
+  var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: NameOfProduct,
+        datasets: [{
+            label: '# of Votes',
+            data: ProductShown ,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        },{label: NameOfProduct,
+        data: ProductClicks,
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1} 
+      ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+}
 
 
 
