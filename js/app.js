@@ -1,4 +1,5 @@
 'use strict';
+
 let imageArray = [
   'bag.jpg',
   'banana.jpg',
@@ -20,7 +21,7 @@ let imageArray = [
   'water-can.jpg',
   'wine-glass.jpg',
 ];
-
+let count = 0
 let counter = 0;
 let numberOfRound = 25;
 const imageSection = document.getElementById('imageSection');
@@ -29,25 +30,22 @@ const imageSection = document.getElementById('imageSection');
 // let RightImage = document.getElementById('RightImage');
 
 
-function bussMall(prductName, productPath,NumOfShown =0,NumOfClicks=0) {
+function bussMall(prductName, productPath , shown = 0,clic = 0) {
   this.prductName = prductName;
-  this.productPath = 'images/' + productPath;
-  this.NumOfShown = NumOfShown;
-  this.NumOfClicks =NumOfClicks;
+  this.productPath = productPath;
+  this.NumOfShown = shown;
+  this.NumOfClicks = clic;
   bussMall.all.push(this);
-
 }
-bussMall.all = [];
-
+bussMall.all = [];;
+getData()
 // for (let i = 0; i < imageArray.length; i++) {
 //   new bussMall(imageArray[i].split('.')[0], imageArray[i]);
 // }
+let leftRandom ;
+let MiddleRandom;
+let RightRandom ;
 
-console.log(bussMall.all);
-let leftRandom = gitRandomImg(0, imageArray.length - 1);
-let MiddleRandom = gitRandomImg(0, imageArray.length - 1);
-let RightRandom = gitRandomImg(0, imageArray.length - 1);
-getData();
 function randomImg() {
 
   do {
@@ -58,18 +56,20 @@ function randomImg() {
   } while( leftRandom===RightRandom || RightRandom===MiddleRandom || MiddleRandom===leftRandom);
 
 
-  MiddleImage.src = './' + bussMall.all[RightRandom].productPath;
-  RightImage.src = './' + bussMall.all[MiddleRandom].productPath;
-  leftImage.src = './' + bussMall.all[leftRandom].productPath;
+  MiddleImage.src =   './images/'+bussMall.all[RightRandom].productPath;
+  RightImage.src =  './images/'+bussMall.all[MiddleRandom].productPath;
+  leftImage.src =  './images/'+bussMall.all[leftRandom].productPath;
+
   bussMall.all[leftRandom].NumOfShown++;
   bussMall.all[MiddleRandom].NumOfShown++;
   bussMall.all[RightRandom].NumOfShown++;
   
-
-localStorage.data=JSON.stringify(bussMall.all);
-
+  localStorage.data1 = JSON.stringify(bussMall.all);
+  console.log(bussMall.all)
 }
 randomImg();
+
+// console.log(localStorage.data)
 
 
 let ulel = document.getElementById('Result');
@@ -100,28 +100,28 @@ function changingImg(jump) {
   console.log(bussMall.all); 
   }}
   stopButton.addEventListener('click', ResultOnClick);
-    function ResultOnClick() {
-     if (counter >= numberOfRound){
-      stopButton.remove()
-      const ulResult = document.getElementById('Result');
+  function ResultOnClick() {
+   if (counter >= numberOfRound){
+    stopButton.remove()
+    const ulResult = document.getElementById('Result');
 
+    
+    for (let i = 0; i < imageArray.length; i++) {
       
-      for (let i = 0; i < imageArray.length; i++) {
-        
-        let liResult = document.createElement('li');
-        
-        liResult.textContent = `${bussMall.all[i].prductName} had ${bussMall.all[i].NumOfClicks} votes, and was seen ${bussMall.all[i].NumOfShown} times.`
-        ulResult.appendChild(liResult);
+      let liResult = document.createElement('li');
+      
+      liResult.textContent = `${bussMall.all[i].prductName} had ${bussMall.all[i].NumOfClicks} votes, and was seen ${bussMall.all[i].NumOfShown} times.`
+      ulResult.appendChild(liResult);
 
-      }
-      stopButton.removeEventListener('click', ResultOnClick);
-      chart();
     }
-  else (alert('Pick up your 25 favorite products to view the results!^^'));}
-   
-  function removelist() {
-    document.getElementById('imageSection').removeEventListener('click', changingImg);
+    stopButton.removeEventListener('click', ResultOnClick);
+    chart();
   }
+else (alert('Pick up your 25 favorite products to view the results!^^'));}
+ 
+function removelist() {
+  document.getElementById('imageSection').removeEventListener('click', changingImg);
+}
 
 
 function chart (){
@@ -139,30 +139,42 @@ var myChart = new Chart(ctx, {
     data: {
         labels: NameOfProduct,
         datasets: [{
-            label: 'apperance',
+            label: '# of show',
             data: ProductShown ,
             backgroundColor: [
-                'rgba(20, 9, 132, 0.2)',
-                'rgba(54, 162, 35, 0.2)',
-                
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
-                'rgba(153, 102, 5, 1)',
-               
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
-        },{label: 'vots',
+        },{label: '# of click',
         data: ProductClicks,
         backgroundColor: [
-            'rgba(66, 99, 5, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-        
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
         ],
         borderColor: [
-            'rgba(8, 99, 132, 1)',
-            'rgba(54, 162, 8, 1)',
-           
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
         ],
         borderWidth: 1} 
       ]
@@ -176,17 +188,21 @@ var myChart = new Chart(ctx, {
     }
 });
 }
-function getData() {
-  if( localStorage.data ) {
-    let data = JSON.parse( localStorage.data );
-    for( let i = 0; i < data.length; i++ ) {
-      new bussMall( data[i].prductName, data[i].productPath, data[i].NumOfShown,data[i].NumOfClicks );
-    }}
-   else {
-    for( let i = 0; i < imageArray.length; i++ ) {
-      new bussMall( imageArray[i].split( '.' )[0], imageArray[i] );
-    }
-   }
-  console.log('dssdf');
 
+
+
+function getData() {
+  // console.log(localStorage.data)
+  if (localStorage.data1) {
+    console.log(localStorage.data1)
+    let data = JSON.parse(localStorage.data1);
+    console.log(data)
+    for (let i = 0; i < data.length; i++) {
+      new bussMall(data[i].prductName, data[i].productPath, data[i].NumOfShown, data[i].NumOfClicks);
+    }
+  } else {
+    for (let i = 0; i < imageArray.length; i++) {
+      new bussMall(imageArray[i].split('.')[0], imageArray[i]);
+    }
   }
+}
