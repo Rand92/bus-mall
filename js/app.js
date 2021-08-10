@@ -97,7 +97,7 @@ function changingImg(jump) {
   }}
   stopButton.addEventListener('click', ResultOnClick);
     function ResultOnClick() {
-     
+     if (counter >= numberOfRound){
       stopButton.remove()
       const ulResult = document.getElementById('Result');
 
@@ -112,7 +112,7 @@ function changingImg(jump) {
       }
       stopButton.removeEventListener('click', ResultOnClick);
       chart();
-    }
+    }}
    
   function removelist() {
     document.getElementById('imageSection').removeEventListener('click', changingImg);
